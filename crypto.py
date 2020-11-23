@@ -131,17 +131,30 @@ def graph_single(dataset):
     fig.show()
 
 
+def get_choice():
+    while True:
+        try:
+            choice = int(input("\nType 1 for bitcoin and 2 for any altcoin (-1 to exit): "))
+        except:
+            print("\nTry again.")
+            continue
+        if choice != 1 and choice != 2 and choice != -1:
+            print("\nTry again.")
+            continue
+        return choice
+
+
 def main():
     check_date()
     bitcoin_df = create_btc_dataset()
 
-    choice = int(input("\nType 1 for bitcoin and 2 for any altcoin (-1 to exit): "))
+    choice = get_choice()
 
     while choice != -1:
         if choice == 1:
             graph_single(bitcoin_df)
         elif choice == 2:
-            altcode = str(input("Enter altcoin code: "))
+            altcode = str(input("Enter altcoin code (all caps): "))
             try:
                 altcoin_df = create_alt_dataset(altcode, bitcoin_df)
                 graph_single(altcoin_df)
@@ -150,6 +163,7 @@ def main():
         else:
             print("\nInvalid choice.")
 
-        choice = int(input("\nType 1 for bitcoin and 2 for any altcoin (-1 to exit): "))
+        choice = get_choice()
+
 
 main()
